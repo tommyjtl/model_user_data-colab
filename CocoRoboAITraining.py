@@ -118,7 +118,7 @@ class aws():
         os.chdir("./toolkit")
 
         # print("python generate_conf.py " + str(project_path) + " " + str(project_name) + " " + str(total_objects))
-        command = "python generate_conf.py " + str(project_path) + " " + str(project_name) + " " + str(total_objects)
+        command = "python generate_conf.py " + str(project_path) + "/ " + str(project_name) + " " + str(total_objects)
         process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE)
 
         while process.stdout.readline().strip().decode("utf-8") != '':
