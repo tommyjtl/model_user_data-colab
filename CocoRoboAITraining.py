@@ -150,7 +150,7 @@ class aws():
                     iteration_times = int(formatted_output.split()[0][:-1])
                     avg_loss = float(formatted_output.split()[2])
                     # print(str(int(iteration_times)) + "," + str(float(formatted_output.split()[2])))
-                    if avg_loss < 0.03: break
+                    if avg_loss < 0.05: break
         # process.terminate()
         process.terminate()
         try:
