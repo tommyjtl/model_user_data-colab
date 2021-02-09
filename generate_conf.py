@@ -6,7 +6,8 @@ conf_directory_name = "conf"
 
 # project_path = input("Please enter the name of your project inside Google Drive: \n") 
 # classes_count = input("Please enter the number of classes you would like to train: \n")
-dataset_file_path = str(sys.argv[1])
+dataset_file_path = "/home/ubuntu/aws-experiment/"
+
 project_path = str(sys.argv[2])
 classes_count = str(sys.argv[3])
 
