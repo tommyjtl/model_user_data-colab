@@ -194,7 +194,7 @@ class aws():
     def export(self):
         os.chdir("./toolkit/")
 
-        for path in run_export_command("python export_model.py processed-dataset"):
+        for path in self.run_export_command("python export_model.py processed-dataset"):
             print(path)
 
         os.chdir("../")
