@@ -192,13 +192,13 @@ class aws():
         while True:
             if "Main memory usage" in process.stdout.readline().strip().decode("utf-8"):
                 break
+            else: pass
             # print(process.stdout.readline().strip().decode("utf-8"))
 
         process.terminate()
-        
+
         try:
             process.wait(timeout=0.2)
-            print(os.listdir("../backup/"))
         except subprocess.TimeoutExpired:
             print('subprocess did not terminate in time')
 
