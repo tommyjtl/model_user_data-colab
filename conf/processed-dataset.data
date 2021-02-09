@@ -1,5 +1,0 @@
-classes=3
-train  = /Users/tommyjtl/Documents/CocoRobo/Software/experiments/aws-cli-backend/toolkit/data/train.txt
-valid  = /Users/tommyjtl/Documents/CocoRobo/Software/experiments/aws-cli-backend/toolkit/data/test.txt
-names = /Users/tommyjtl/Documents/CocoRobo/Software/experiments/aws-cli-backend/toolkit/conf/processed-dataset.names
-backup = /Users/tommyjtl/Documents/CocoRobo/Software/experiments/aws-cli-backend/toolkit/backup
