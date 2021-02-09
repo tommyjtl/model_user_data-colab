@@ -14,8 +14,14 @@ class aws():
         os.chdir("./toolkit")
         log_file = open("out.log", "w+")
         try:
+            try:
+                from subprocess import DEVNULL
+            except ImportError:
+                DEVNULL = open(os.devnull, 'wb')
+
             command = "python setup.py"
-            process = subprocess.Popen(shlex.split(command), stdout=None)
+            # process = subprocess.Popen(shlex.split(command))
+            process = subprocess.Popen(shlex.split(command), stdout=DEVNULL, stderr=DEVNULL)
             while True:
                 output = process.stdout.readline()
                 if output == '' and process.poll() is not None:

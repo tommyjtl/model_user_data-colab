@@ -113,15 +113,16 @@ try:
 		print('subprocess did not terminate in time')
 	os.chdir("../../")
 
+	print("""
+	  ____                   _ 
+	 |  _ \  ___  _ __   ___| |
+	 | | | |/ _ \| '_ \ / _ \ |
+	 | |_| | (_) | | | |  __/_|
+	 |____/ \___/|_| |_|\___(_)
+	                           
+		""")
+
 
 except KeyboardInterrupt:
 	print("Keyboard Interrupted.")
 
-print("""
-  ____                   _ 
- |  _ \  ___  _ __   ___| |
- | | | |/ _ \| '_ \ / _ \ |
- | |_| | (_) | | | |  __/_|
- |____/ \___/|_| |_|\___(_)
-                           
-	""")
