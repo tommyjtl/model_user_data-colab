@@ -21,6 +21,7 @@ try:
 
 	command = "git submodule update --init"
 	# print(shlex.split(command))
+	FNULL = open(os.devnull, 'w')
 	process = subprocess.Popen(shlex.split(command), stdout=FNULL, stderr=subprocess.STDOUT)
 	# print("Process PID is: " + str(process.pid))
 	while True:
