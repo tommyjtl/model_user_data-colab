@@ -1,4 +1,4 @@
-import subprocess, shlex, os, sys, shutil
+import subprocess, shlex, os, sys, shutil, signal
 import logging
 import boto3
 from botocore.exceptions import ClientError
@@ -11,37 +11,69 @@ AWS_SECRET_KEY_ID = "XFP2BfF6I/W7DHxBXLNsUJKg387owdh4zLUXt889"
 class aws():
     def __init__(self):
         print("Preparing toolkits...")
+        log_file_path = os.getcwd() + "/outlog.txt"
+
         os.chdir("./toolkit")
-        log_file = open("out.log", "w+")
+
         try:
-            try:
-                from subprocess import DEVNULL
-            except ImportError:
-                DEVNULL = open(os.devnull, 'wb')
-
-            command = "python setup.py"
-            # process = subprocess.Popen(shlex.split(command))
-            process = subprocess.Popen(shlex.split(command), stdout=DEVNULL, stderr=DEVNULL)
-            while True:
-                print(process)
-                '''
-                output = process.stdout.readline()
-                if output == '' and process.poll() is not None:
-                    break
-                elif output:
-                    formatted_output = output.strip().decode("utf-8")
-
-                    now = datetime.now()
-                    log_file.write("[ " + str(now.strftime("%d/%m/%Y %H:%M:%S")) + " ] " + str(formatted_output))
-
-                    if formatted_output == '':
-                        break
-                else: break
-                '''
+            print("(Step 1 of 3) Getting all the tools we need... (Darknet, Darkflow, Conversion tool)")
+            command = "git submodule update --init"
+            process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE)
+            while process.stdout.readline().strip().decode("utf-8") != '':
+                # print(process.stdout.readline().strip().decode("utf-8"))
+                pass
             process.terminate()
-            log_file.close()
-        except BaseException as e:
-            print(str(e))
+            try:
+                process.wait(timeout=0.2)
+                print('== subprocess exited with rc =' + str(process.returncode))
+            except subprocess.TimeoutExpired:
+                print('subprocess did not terminate in time')
+
+            print("(Step 2 of 3) Building darknet...")
+            command = "make"
+            os.chdir("./tools/darknet-colab/")
+            process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE)
+            # print("Process PID is: " + str(process.pid))
+            while process.stdout.readline().strip().decode("utf-8") != '':
+                pass
+            process.terminate()
+            try:
+                process.wait(timeout=0.2)
+                print('== subprocess exited with rc =', process.returncode)
+            except subprocess.TimeoutExpired:
+                print('subprocess did not terminate in time')
+            os.chdir("../../")
+
+            print("(Step 3 of 3) Building darkflow...")
+            command = "python3 setup.py build_ext --inplace"
+            os.chdir("./tools/darkflow-colab/")
+            # print(shlex.split(command))
+            process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE)
+            # print("Process PID is: " + str(process.pid))
+            while process.stdout.readline().strip().decode("utf-8") != '':
+                pass
+            process.terminate()
+            try:
+                process.wait(timeout=0.2)
+                print('== subprocess exited with rc =', process.returncode)
+            except subprocess.TimeoutExpired:
+                print('subprocess did not terminate in time')
+            os.chdir("../../")
+            print("Done!")
+
+        except KeyboardInterrupt:
+            print("Keyboard Interrupted.")
+            
+
+    def log_writter(self, log, file_path):
+        now = datetime.now()
+        log_formatter = str("[" + str(now.strftime("%d/%m/%Y %H:%M:%S")) + "]\t" + str(log) + "\n")
+
+        print(log_formatter)
+        log_file = open(file_path, "a")
+        log_file.write(log_formatter)
+        log_file.close()
+
 
     def downloadDirectoryFroms3(self, bucketName, remoteDirectoryName):
         s3_resource = boto3.resource('s3', region_name='ap-southeast-1', aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_KEY_ID)
