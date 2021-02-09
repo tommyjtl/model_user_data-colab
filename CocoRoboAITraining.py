@@ -115,6 +115,9 @@ class aws():
 
         os.chdir("../")
 
+    def clear_config(self):
+        pass
+
     def generate_config(self, project_path, project_name, total_objects):
         os.chdir("./toolkit")
 
