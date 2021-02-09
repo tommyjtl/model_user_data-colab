@@ -1,4 +1,4 @@
-import subprocess, os, sys, shutil
+import subprocess, shlex, os, sys, shutil
 import logging
 import boto3
 from botocore.exceptions import ClientError
