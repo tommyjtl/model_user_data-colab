@@ -11,8 +11,6 @@ AWS_SECRET_KEY_ID = "XFP2BfF6I/W7DHxBXLNsUJKg387owdh4zLUXt889"
 class aws():
     def __init__(self):
         print("Preparing toolkits...")
-        log_file_path = os.getcwd() + "/outlog.txt"
-
         os.chdir("./toolkit")
 
         try:
@@ -58,12 +56,12 @@ class aws():
                 print('== subprocess exited with rc =', process.returncode)
             except subprocess.TimeoutExpired:
                 print('subprocess did not terminate in time')
-            os.chdir("../../")
+            os.chdir(os.getcwd())
             print("Done!")
 
         except KeyboardInterrupt:
             print("Keyboard Interrupted.")
-            
+
 
     def log_writter(self, log, file_path):
         now = datetime.now()
