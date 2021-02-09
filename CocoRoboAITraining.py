@@ -26,7 +26,7 @@ class aws():
                     now = datetime.now()
                     log_file.write("[ " + str(now.strftime("%d/%m/%Y %H:%M:%S")) + " ] " + str(formatted_output))
 
-                    elif formatted_output == '':
+                    if formatted_output == '':
                         break
                 else: break
             process.terminate()
