@@ -186,7 +186,7 @@ class aws():
     def export(self, project_name):
         os.chdir("./toolkit/")
 
-        command = "python export_model.py " + str(project_name)
+        command = "python export_model.py processed-dataset"
         process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE)
 
         while process.stdout.readline().strip().decode("utf-8") != '':
