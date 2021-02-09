@@ -92,12 +92,23 @@ class aws():
         print("Downloading your dataset: \"" + s3_source_path + "\" from AWS S3.")
         self.downloadDirectoryFroms3("cocorobo-training-test", s3_source_path)
         print("Successfully downloaded!")
-        # shutil.copytree(src, dest, copy_function = shutil.copy)
-        # os.
-        # return True
 
-    def generate_config(self, project_name, count):
-        pass
+    def generate_config(self, project_name, total_objects):
+        os.chdir("./toolkit")
+
+        command = "python generate_conf.py " + str(project_name) + " " + str(count)
+        process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE)
+
+        while process.stdout.readline().strip().decode("utf-8") != '':
+            pass
+        process.terminate()
+        try:
+            process.wait(timeout=0.2)
+            print('== subprocess exited with rc =' + str(process.returncode))
+        except subprocess.TimeoutExpired:
+            print('subprocess did not terminate in time')
+
+        os.chdir("../")
 
     def train(self, iteration=3000):
         pass
