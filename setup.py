@@ -63,8 +63,8 @@ try:
 	process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE)
 	# print("Process PID is: " + str(process.pid))
 	while True:
-		# output = process.stdout.readline()
-		if process.stdout.readline() == '' and process.poll() is not None:
+		output = process.stdout.readline()
+		if output == '' and process.poll() is not None:
 			break
 		elif output:
 			print("")
