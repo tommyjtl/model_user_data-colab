@@ -23,6 +23,8 @@ class aws():
             # process = subprocess.Popen(shlex.split(command))
             process = subprocess.Popen(shlex.split(command), stdout=DEVNULL, stderr=DEVNULL)
             while True:
+                print(process)
+                '''
                 output = process.stdout.readline()
                 if output == '' and process.poll() is not None:
                     break
@@ -35,6 +37,7 @@ class aws():
                     if formatted_output == '':
                         break
                 else: break
+                '''
             process.terminate()
             log_file.close()
         except BaseException as e:
