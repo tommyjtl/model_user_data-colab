@@ -183,19 +183,24 @@ class aws():
 
         os.chdir("../../")
 
-    def run_export_command(self, command):
-        process = Popen(command, stdout=PIPE, shell=True)
-        while True:
-            line = process.stdout.readline().rstrip()
-            if not line:
-                break
-            yield line
-
     def export(self):
         os.chdir("./toolkit/")
 
-        for path in self.run_export_command("python export_model.py processed-dataset"):
-            print(path)
+        command = "python export_model.py processed-dataset"
+        process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE)
+
+        while True:
+            if "Main memory usage" in process.stdout.readline().strip().decode("utf-8"):
+                break
+            # print(process.stdout.readline().strip().decode("utf-8"))
+
+        process.terminate()
+        
+        try:
+            process.wait(timeout=0.2)
+            print(os.listdir("../backup/"))
+        except subprocess.TimeoutExpired:
+            print('subprocess did not terminate in time')
 
         os.chdir("../")
 
