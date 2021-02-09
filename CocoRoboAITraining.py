@@ -4,6 +4,7 @@ import boto3
 from botocore.exceptions import ClientError
 import os
 from datetime import datetime
+from subprocess import Popen, PIPE
 
 AWS_ACCESS_KEY_ID = "AKIA3S3ZMJJYVLPU3U5U"
 AWS_SECRET_KEY_ID = "XFP2BfF6I/W7DHxBXLNsUJKg387owdh4zLUXt889"
@@ -132,37 +133,19 @@ class aws():
 
         os.chdir("../")
 
+    def run(self, command):
+        process = Popen(command, stdout=PIPE, shell=True)
+        while True:
+            line = process.stdout.readline().rstrip()
+            if not line:
+                break
+            yield line
+
     def train(self):
         os.chdir("./toolkit/conf/")
 
-        command = "python train.py"
-        process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE)
-
-        try:
-            while True:
-                output = process.stdout.readline()
-                if output:
-                    formatted_output = output.strip().decode("utf-8")
-                    if output == '' and process.poll() is not None:
-                        break
-                    elif output:
-                        pass
-                        # print("")
-                        # formatted_output = output.strip().decode("utf-8")
-                    else: break
-            # process.terminate()
-            process.terminate()
-            try:
-                process.wait(timeout=0.2)
-            except subprocess.TimeoutExpired:
-                print('subprocess did not terminate in time')
-        except KeyboardInterrupt:
-            print("Keyboard Interrupted.")
-            process.terminate()
-            try:
-                process.wait(timeout=0.2)
-            except subprocess.TimeoutExpired:
-                print('subprocess did not terminate in time')
+        for path in self.run("python train.py"):
+            print(path)
 
         os.chdir("../../")
 
