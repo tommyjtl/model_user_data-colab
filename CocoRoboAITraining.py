@@ -138,16 +138,31 @@ class aws():
         command = "python train.py"
         process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE)
 
-        while process.stdout.readline().strip().decode("utf-8") != '':
-            print(process.stdout.readline().strip().decode("utf-8"))
-            pass
-
-        process.terminate()
         try:
-            process.wait(timeout=0.2)
-            # print('Donegenerated!' + str(process.returncode))
-        except subprocess.TimeoutExpired:
-            print('subprocess did not terminate in time')
+            while True:
+                output = process.stdout.readline()
+                if output:
+                    formatted_output = output.strip().decode("utf-8")
+                    if output == '' and process.poll() is not None:
+                        break
+                    elif output:
+                        pass
+                        # print("")
+                        # formatted_output = output.strip().decode("utf-8")
+                    else: break
+            # process.terminate()
+            process.terminate()
+            try:
+                process.wait(timeout=0.2)
+            except subprocess.TimeoutExpired:
+                print('subprocess did not terminate in time')
+        except KeyboardInterrupt:
+            print("Keyboard Interrupted.")
+            process.terminate()
+            try:
+                process.wait(timeout=0.2)
+            except subprocess.TimeoutExpired:
+                print('subprocess did not terminate in time')
 
         os.chdir("../../")
 
