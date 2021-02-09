@@ -13,7 +13,7 @@ class aws():
         os.chdir("./toolkit")
         try:
             command = "python setup.py"
-            process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE)
+            process = subprocess.Popen(shlex.split(command), stdout=None)
             while True:
                 output = process.stdout.readline()
                 if output == '' and process.poll() is not None:
