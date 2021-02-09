@@ -1,9 +1,10 @@
-import glob, random, os, time, shutil
+import glob, random, os, time, shutil, sys
 import subprocess
 
-project_name = input("Please enter the name of your project: \n")
+# project_name = input("Please enter the name of your project: \n")
 
-current_directory_path = os.getcwd()
+# current_directory_path = os.getcwd()
+current_directory_path = str(sys.argv[1])
 
 def clear_darflow_label():
 	try:
