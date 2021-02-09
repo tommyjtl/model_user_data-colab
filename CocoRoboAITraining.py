@@ -3,6 +3,7 @@ import logging
 import boto3
 from botocore.exceptions import ClientError
 import os
+from datetime import datetime
 
 AWS_ACCESS_KEY_ID = "AKIA3S3ZMJJYVLPU3U5U"
 AWS_SECRET_KEY_ID = "XFP2BfF6I/W7DHxBXLNsUJKg387owdh4zLUXt889"
@@ -11,6 +12,7 @@ class aws():
     def __init__(self):
         print("Preparing toolkits...")
         os.chdir("./toolkit")
+        log_file = open("out.log", "w+")
         try:
             command = "python setup.py"
             process = subprocess.Popen(shlex.split(command), stdout=None)
@@ -19,16 +21,16 @@ class aws():
                 if output == '' and process.poll() is not None:
                     break
                 elif output:
-                    print("")
                     formatted_output = output.strip().decode("utf-8")
-                    # print(formatted_output)
 
-                    if "Submodule path 'tools/tflite2kmodel-colab': checked out" in formatted_output:
-                        break
+                    now = datetime.now()
+                    log_file.write("[ " + str(now.strftime("%d/%m/%Y %H:%M:%S")) + " ] " + str(formatted_output))
+
                     elif formatted_output == '':
                         break
                 else: break
             process.terminate()
+            log_file.close()
         except BaseException as e:
             print(str(e))
 
