@@ -183,7 +183,7 @@ class aws():
 
         os.chdir("../../")
 
-    def export(self, project_name):
+    def export(self):
         os.chdir("./toolkit/")
 
         command = "python export_model.py processed-dataset"
