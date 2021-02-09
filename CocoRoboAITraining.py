@@ -183,23 +183,19 @@ class aws():
 
         os.chdir("../../")
 
+    def run_export_command(command):
+        process = Popen(command, stdout=PIPE, shell=True)
+        while True:
+            line = process.stdout.readline().rstrip()
+            if not line:
+                break
+            yield line
+
     def export(self):
         os.chdir("./toolkit/")
 
-        command = "python export_model.py processed-dataset"
-        process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE)
-
-        while process.stdout.readline().strip().decode("utf-8") != '':
-            print(process.stdout.readline().strip().decode("utf-8"))
-
-        process.terminate()
-
-        try:
-            process.wait(timeout=0.2)
-            # shutil.copy("./convert/", export_folder_name)
-            print(os.listdir("./convert/"))
-        except subprocess.TimeoutExpired:
-            print('subprocess did not terminate in time')
+        for path in run_export_command("python export_model.py processed-dataset"):
+            print(path)
 
         os.chdir("../")
 
