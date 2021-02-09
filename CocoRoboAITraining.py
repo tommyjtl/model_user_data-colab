@@ -56,7 +56,8 @@ class aws():
                 print('== subprocess exited with rc =', process.returncode)
             except subprocess.TimeoutExpired:
                 print('subprocess did not terminate in time')
-            os.chdir(os.getcwd())
+            
+            os.chdir("../../../")
             print("Done!")
 
         except KeyboardInterrupt:
