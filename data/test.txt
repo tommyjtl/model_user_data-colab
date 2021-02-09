@@ -1,0 +1,9 @@
+/Users/tommyjtl/Documents/CocoRobo/Software/experiments/aws-cli-backend/toolkit/data/stop_6.jpg
+/Users/tommyjtl/Documents/CocoRobo/Software/experiments/aws-cli-backend/toolkit/data/carparking_4.jpg
+/Users/tommyjtl/Documents/CocoRobo/Software/experiments/aws-cli-backend/toolkit/data/giveway_4.jpg
+/Users/tommyjtl/Documents/CocoRobo/Software/experiments/aws-cli-backend/toolkit/data/carparking_9.jpg
+/Users/tommyjtl/Documents/CocoRobo/Software/experiments/aws-cli-backend/toolkit/data/giveway_10.jpg
+/Users/tommyjtl/Documents/CocoRobo/Software/experiments/aws-cli-backend/toolkit/data/stop_7.jpg
+/Users/tommyjtl/Documents/CocoRobo/Software/experiments/aws-cli-backend/toolkit/data/giveway_9.jpg
+/Users/tommyjtl/Documents/CocoRobo/Software/experiments/aws-cli-backend/toolkit/data/giveway_2.jpg
+/Users/tommyjtl/Documents/CocoRobo/Software/experiments/aws-cli-backend/toolkit/data/giveway_8.jpg

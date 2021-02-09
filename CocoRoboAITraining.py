@@ -23,7 +23,7 @@ class aws():
             process.terminate()
             try:
                 process.wait(timeout=0.2)
-                print('== subprocess exited with rc =' + str(process.returncode))
+                print('(Step 1 of 3) Done fetching all the tools.' + str(process.returncode))
             except subprocess.TimeoutExpired:
                 print('subprocess did not terminate in time')
 
@@ -37,7 +37,7 @@ class aws():
             process.terminate()
             try:
                 process.wait(timeout=0.2)
-                print('== subprocess exited with rc =', process.returncode)
+                print('(Step 2 of 3) Done building darknet.', process.returncode)
             except subprocess.TimeoutExpired:
                 print('subprocess did not terminate in time')
             os.chdir("../../")
@@ -53,7 +53,7 @@ class aws():
             process.terminate()
             try:
                 process.wait(timeout=0.2)
-                print('== subprocess exited with rc =', process.returncode)
+                print('(Step 3 of 3) Done building darkflow...', process.returncode)
             except subprocess.TimeoutExpired:
                 print('subprocess did not terminate in time')
             
@@ -88,15 +88,36 @@ class aws():
                 else: pass
         return True
 
-    def get_labeld_dataset(self, s3_source_path, local_path="./"):
+    def get_labeld_dataset(self, s3_bucket, s3_source_path, local_path="./"):
         print("Downloading your dataset: \"" + s3_source_path + "\" from AWS S3.")
-        self.downloadDirectoryFroms3("cocorobo-training-test", s3_source_path)
+        self.downloadDirectoryFroms3(s3_bucket, s3_source_path)
         print("Successfully downloaded!")
+
+    def proccess_annotation(self, labeling_project_name, export_folder_name):
+        os.chdir("./toolkit")
+        command = "python process_annotation.py " + str(labeling_project_name) + " " + str(export_folder_name)
+        # print(command)
+        # python process_annotation.py "traffic-signs-labeling" "./processed-dataset/" "../sagemaker-labeling/sagemaker-labeled-dataset/"
+        process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE)
+
+        while process.stdout.readline().strip().decode("utf-8") != '':
+            # print(process.stdout.readline().strip().decode("utf-8"))
+            pass
+        process.terminate()
+
+        try:
+            process.wait(timeout=0.2)
+            # print('== subprocess exited with rc =' + str(process.returncode))
+            print("Annotated dataset processed!")
+        except subprocess.TimeoutExpired:
+            print('subprocess did not terminate in time')
+
+        os.chdir("../")
 
     def generate_config(self, project_path, project_name, total_objects):
         os.chdir("./toolkit")
 
-        print("python generate_conf.py " + str(project_path) + " " + str(project_name) + " " + str(total_objects))
+        # print("python generate_conf.py " + str(project_path) + " " + str(project_name) + " " + str(total_objects))
         command = "python generate_conf.py " + str(project_path) + " " + str(project_name) + " " + str(total_objects)
         process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE)
 
@@ -105,14 +126,30 @@ class aws():
         process.terminate()
         try:
             process.wait(timeout=0.2)
-            print('== subprocess exited with rc =' + str(process.returncode))
+            print('Configuration generated!' + str(process.returncode))
         except subprocess.TimeoutExpired:
             print('subprocess did not terminate in time')
 
         os.chdir("../")
 
-    def train(self, iteration=3000):
-        pass
+    def train(self):
+        os.chdir("./toolkit/conf/")
+
+        command = "python train.py"
+        process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE)
+
+        while process.stdout.readline().strip().decode("utf-8") != '':
+            print(process.stdout.readline().strip().decode("utf-8"))
+            pass
+
+        process.terminate()
+        try:
+            process.wait(timeout=0.2)
+            # print('Donegenerated!' + str(process.returncode))
+        except subprocess.TimeoutExpired:
+            print('subprocess did not terminate in time')
+
+        os.chdir("../../")
 
     def validate(self):
         pass

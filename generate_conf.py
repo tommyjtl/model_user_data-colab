@@ -8,8 +8,9 @@ conf_directory_name = "conf"
 # classes_count = input("Please enter the number of classes you would like to train: \n")
 dataset_file_path = "/home/ubuntu/aws-experiment/"
 
-project_path = str(sys.argv[1])
-classes_count = str(sys.argv[2])
+dataset_file_path = str(sys.argv[1])
+project_path = str(sys.argv[2])
+classes_count = str(sys.argv[3])
 
 # project_name = input("Please enter the name of your project: \n")
 project_name = project_path
