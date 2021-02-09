@@ -1,15 +1,16 @@
-import glob, random, os, time
+import glob, random, os, time, sys
 
 conf_directory_name = "conf"
-# google_drive_path = "/home/ec2-user/SageMaker/"
-google_drive_path = "/home/ubuntu/projects/"
-# google_drive_path = "/content/"
-# google_drive_path = "/Users/tommyjtl/Documents/CocoRobo/"
 
-google_drive_project_path = input("Please enter the name of your project inside Google Drive: \n") 
-classes_count = input("Please enter the number of classes you would like to train: \n")
+dataset_file_path = "/home/ec2-user/SageMaker/"
+
+# project_path = input("Please enter the name of your project inside Google Drive: \n") 
+# classes_count = input("Please enter the number of classes you would like to train: \n")
+project_path = sys.argv[0]
+classes_count = sys.argv[1]
+
 # project_name = input("Please enter the name of your project: \n")
-project_name = google_drive_project_path
+project_name = project_path
 current_directory_path = os.getcwd()
 
 # shenzhen_trash_classification_sign_dataset
@@ -36,7 +37,7 @@ def generate_data():
 	f.close()
 
 def generate_names():
-	os.chdir(google_drive_path + google_drive_project_path)
+	os.chdir(dataset_file_path + project_path)
 	names_file_name = ""
 	for names_file in glob.glob("*.names"):
 		names_file_name = names_file
@@ -127,7 +128,7 @@ def generate_subprocess_check_py():
 
 if __name__ == '__main__':
 	# shenzhen_trash_classification_sign_dataset
-	os.system("cp -a "+ google_drive_path +google_drive_project_path + "/. data/")
+	os.system("cp -a "+ dataset_file_path +project_path + "/. data/")
 	generate_cfg()
 	generate_data()
 	generate_names()
