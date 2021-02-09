@@ -150,7 +150,7 @@ class aws():
                     iteration_times = int(formatted_output.split()[0][:-1])
                     avg_loss = float(formatted_output.split()[2])
                     # print(str(int(iteration_times)) + "," + str(float(formatted_output.split()[2])))
-                    if avg_loss < 0.06: break
+                    if avg_loss < 0.03: break
         # process.terminate()
         process.terminate()
         try:
@@ -183,18 +183,20 @@ class aws():
 
         os.chdir("../../")
 
-    def export(self):
+    def export(self, project_name):
         os.chdir("./toolkit/")
 
-        command = "python export_model.py"
+        command = "python export_model.py " + str(project_name)
         process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE)
 
         while process.stdout.readline().strip().decode("utf-8") != '':
             print(process.stdout.readline().strip().decode("utf-8"))
 
         process.terminate()
+
         try:
             process.wait(timeout=0.2)
+            # shutil.copy("./convert/", export_folder_name)
             print(os.listdir("./convert/"))
         except subprocess.TimeoutExpired:
             print('subprocess did not terminate in time')
