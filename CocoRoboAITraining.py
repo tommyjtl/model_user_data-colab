@@ -96,7 +96,7 @@ class aws():
     def generate_config(self, project_name, total_objects):
         os.chdir("./toolkit")
 
-        command = "python generate_conf.py " + str(project_name) + " " + str(count)
+        command = "python generate_conf.py " + str(project_name) + " " + str(total_objects)
         process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE)
 
         while process.stdout.readline().strip().decode("utf-8") != '':
