@@ -1,7 +1,7 @@
 [submodule "tools/darknet-colab"]
 	path = tools/darknet-colab
 	url = https://github.com/tommyjtl/darknet-colab
-	branch = master
+	branch = aws
 [submodule "tools/tflite2kmodel-colab"]
 	path = tools/tflite2kmodel-colab
 	url = https://github.com/tommyjtl/tflite2kmodel-colab
