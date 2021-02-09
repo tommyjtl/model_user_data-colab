@@ -183,7 +183,7 @@ class aws():
 
         os.chdir("../../")
 
-    def run_export_command(command):
+    def run_export_command(self, command):
         process = Popen(command, stdout=PIPE, shell=True)
         while True:
             line = process.stdout.readline().rstrip()
