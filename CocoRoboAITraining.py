@@ -163,7 +163,40 @@ class aws():
         os.chdir("../../")
 
     def validate(self):
-        pass
+        os.chdir("./toolkit/conf/")
+
+        command = "bash test-train.sh"
+        process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE)
+
+        while process.stdout.readline().strip().decode("utf-8") != '':
+            print(process.stdout.readline().strip().decode("utf-8"))
+
+        process.terminate()
+        try:
+            process.wait(timeout=0.2)
+            print(os.listdir("../backup/"))
+        except subprocess.TimeoutExpired:
+            print('subprocess did not terminate in time')
+
+        os.chdir("../../")
 
     def export(self):
-        pass
+        os.chdir("./toolkit/")
+
+        command = "python export_model.py"
+        process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE)
+
+        while process.stdout.readline().strip().decode("utf-8") != '':
+            print(process.stdout.readline().strip().decode("utf-8"))
+
+        process.terminate()
+        try:
+            process.wait(timeout=0.2)
+            print(os.listdir("./convert/"))
+        except subprocess.TimeoutExpired:
+            print('subprocess did not terminate in time')
+
+        os.chdir("../")
+
+
+
