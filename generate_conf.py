@@ -2,8 +2,8 @@ import glob, random, os, time, sys
 
 conf_directory_name = "conf"
 
-# dataset_file_path = "/home/ec2-user/SageMaker/"
-dataset_file_path = "../sagemaker-labeling/"
+dataset_file_path = "/home/ec2-user/SageMaker/"
+# dataset_file_path = "../sagemaker-labeling/"
 
 # project_path = input("Please enter the name of your project inside Google Drive: \n") 
 # classes_count = input("Please enter the number of classes you would like to train: \n")
