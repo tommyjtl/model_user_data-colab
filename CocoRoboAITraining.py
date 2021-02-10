@@ -6,8 +6,8 @@ import os
 from datetime import datetime
 from subprocess import Popen, PIPE
 
-AWS_ACCESS_KEY_ID = "AKIA3S3ZMJJYVLPU3U5U"
-AWS_SECRET_KEY_ID = "XFP2BfF6I/W7DHxBXLNsUJKg387owdh4zLUXt889"
+AWS_ACCESS_KEY_ID = "AKIA3S3ZMJJYSOGL6CZX"
+AWS_SECRET_KEY_ID = "xVO10vOTUo27mHea/3qOzw8ppOKOFI5D1FfeAU+0"
 
 class aws():
     def __init__(self):
@@ -94,9 +94,9 @@ class aws():
         self.downloadDirectoryFroms3(s3_bucket, s3_source_path)
         print("Successfully downloaded!")
 
-    def proccess_annotation(self, labeling_project_name, export_folder_name):
+    def proccess_annotation(self, labeling_project_name):
         os.chdir("./toolkit")
-        command = "python process_annotation.py " + str(labeling_project_name) + " " + str(export_folder_name)
+        command = "python process_annotation.py " + str(labeling_project_name) + " ../processed-dataset/"
         # print(command)
         # python process_annotation.py "traffic-signs-labeling" "./processed-dataset/" "../sagemaker-labeling/sagemaker-labeled-dataset/"
         process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE)
@@ -118,11 +118,11 @@ class aws():
     def clear_config(self):
         pass
 
-    def generate_config(self, project_path, project_name, total_objects):
+    def generate_config(self, project_path, total_objects):
         os.chdir("./toolkit")
 
         # print("python generate_conf.py " + str(project_path) + " " + str(project_name) + " " + str(total_objects))
-        command = "python generate_conf.py " + str(project_path) + "/ " + str(project_name) + " " + str(total_objects)
+        command = "python generate_conf.py " + str(project_path) + "/ " + "processed-dataset" + " " + str(total_objects)
         process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE)
 
         while process.stdout.readline().strip().decode("utf-8") != '':
