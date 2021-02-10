@@ -6,8 +6,8 @@ import os
 from datetime import datetime
 from subprocess import Popen, PIPE
 
-AWS_ACCESS_KEY_ID = "AKIA3S3ZMJJYSOGL6CZX"
-AWS_SECRET_KEY_ID = "xVO10vOTUo27mHea/3qOzw8ppOKOFI5D1FfeAU+0"
+AWS_ACCESS_KEY_ID = "AKIA3S3ZMJJY25M3GLPA"
+AWS_SECRET_KEY_ID = "uMYIkviOL0hnCbU85R9Kh8XEqDKR06CFao57Vxb5"
 
 class aws():
     def __init__(self):
